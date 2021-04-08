@@ -104,7 +104,7 @@ class BasicAuthMiddleware extends Middleware
                 session_regenerate_id();
             }
         }
-        if (!isset($_SESSION['username']) || !$_SESSION['username']) {
+        if ((!isset($_SESSION['username']) || !$_SESSION['username']) && strtoupper($request->getMethod()) != 'OPTIONS') {
             $authenticationMode = $this->getProperty('mode', 'required');
             if ($authenticationMode == 'required') {
                 $response = $this->responder->error(ErrorCode::AUTHENTICATION_REQUIRED, '');
